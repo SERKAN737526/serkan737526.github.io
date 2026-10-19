@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'self' https://altyazi-sefi-istek.blue737526.workers.dev; base-uri 'none'; form-action 'none'; object-src 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Altyazı Şefi · Serkan A.</title>
   <meta name="description" content="Yabancı altyazıyı ve konuşmayı anında Türkçeye çeviren, tarayıcıda çalışan uygulama.">
@@ -11,9 +11,11 @@
   <meta property="og:description" content="Yabancı altyazıyı ve konuşmayı anında Türkçeye çeviren, tarayıcıda çalışan uygulama.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://serkan737526.github.io/assets/img/altyazi-sefi-1.jpg">
+  <link rel="canonical" href="https://serkan737526.github.io/projeler/altyazi-sefi.html">
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/style.css">
   <script src="../assets/site.js" defer></script>
+  <script src="../assets/js/istek.js" defer></script>
 </head>
 <body>
   <header class="nav">
@@ -97,13 +99,35 @@
       <div class="note">
         <strong>İndirmeden önce bilin:</strong>
         <ul class="plain">
-          <li><strong>Etkinleştirme gerekir.</strong> Eklenti ilk açılışta bir cihaz kodu (karekod) gösterir; bu kodu bana gönderirsiniz, ben size etkinleştirme kodu iletirim.</li>
+          <li><strong>Etkinleştirme gerekir.</strong> Eklenti ilk açılışta bir cihaz kodu (karekod) gösterir; bu kodu <a href="#kod-iste">aşağıdaki formdan</a> bana gönderirsiniz, ben onaylarım.</li>
           <li><strong>İzinler:</strong> Videolar her sitede olabildiği için eklenti tüm sitelerde çalışma izni ister; ancak siz bir sekmede "Bu sekmede çevir" demedikçe hiçbir şey yapmaz. Sayfanın içeriğini okumaz; altyazıyı videonun görüntüsünden okur. Chrome sürümü konuşmayı çevirmek için sekmenin sesini kullanır.</li>
           <li><strong>Gizlilik:</strong> Görüntü ve ses bilgisayarınızdan çıkmaz; tanıma işlemi tarayıcının içinde yapılır. Dışarı yalnızca çevrilecek metin gider (cihaz içi çeviri yoksa Google Çeviri'ye, o da olmazsa MyMemory'ye). Etkinleştirme için yalnızca cihaz kodu onay sunucuma sorulur.</li>
           <li><strong>Dosya doğrulama:</strong> İndirdiğiniz dosyanın SHA-256 değeri yukarıdakiyle aynıysa dosya değiştirilmemiştir. Windows'ta: <code>certutil -hashfile dosya.zip SHA256</code></li>
           <li>İçindeki açık kaynak kütüphaneler (Tesseract.js, Transformers.js, ONNX Runtime) kendi lisans dosyalarıyla birlikte gelir.</li>
         </ul>
       </div>
+    </section>
+
+    <section id="kod-iste">
+      <h2>Etkinleştirme kodu iste</h2>
+      <p class="sub">Uygulama ya da eklenti ilk açılışta 8 karakterlik bir cihaz kodu gösterir (örnek: <strong>M7R5-D0S7</strong>). Adınızı ve bu kodu gönderin; onayladığımda kilit ekranı açıksa birkaç saniye içinde kendiliğinden açılır.</p>
+      <form id="istek-form" class="istek-form" novalidate>
+        <label>Adınız
+          <input name="ad" type="text" maxlength="60" autocomplete="name" required>
+        </label>
+        <label>Cihaz kodu
+          <input name="kod" type="text" maxlength="12" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="M7R5-D0S7" required>
+        </label>
+        <label class="tam">Not <span class="ince">(isteğe bağlı: hangi tarayıcı ya da cihaz)</span>
+          <textarea name="not" rows="2" maxlength="300"></textarea>
+        </label>
+        <label class="tuzak" aria-hidden="true">Web sitesi <input name="web" type="text" tabindex="-1" autocomplete="off"></label>
+        <div class="tam">
+          <button class="btn primary" type="submit">Gönder</button>
+          <p id="istek-durum" class="form-durum" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+      <p class="ince">Yalnızca adınız, cihaz kodunuz ve notunuz saklanır; 30 gün sonra kendiliğinden silinir. Başka hiçbir bilgi toplanmaz, kimseyle paylaşılmaz.</p>
     </section>
 
     <section>

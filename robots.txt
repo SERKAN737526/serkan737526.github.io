@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /yonetim/
+
+Sitemap: https://serkan737526.github.io/sitemap.xml

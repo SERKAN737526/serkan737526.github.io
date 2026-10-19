@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src https://altyazi-sefi-istek.blue737526.workers.dev; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Etkinleştirme istekleri</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script src="../assets/js/istekler-yonetim.js" defer></script>
+</head>
+<body>
+  <main class="wrap">
+    <section>
+      <h1>Etkinleştirme istekleri</h1>
+      <p class="sub">Altyazı Şefi için sitedeki formdan gelen istekler. Bu sayfa yalnızca şifreyle açılır ve arama motorlarında görünmez.</p>
+
+      <form id="giris" class="istek-form">
+        <label class="tam">Şifre
+          <input name="sifre" type="password" autocomplete="current-password" required>
+        </label>
+        <label class="tam secim"><input name="hatirla" type="checkbox"> Bu cihazda hatırla (yalnızca kendi telefonunuz ya da bilgisayarınızda işaretleyin)</label>
+        <div class="tam"><button class="btn primary" type="submit">Aç</button>
+          <p id="giris-durum" class="form-durum" role="status"></p></div>
+      </form>
+
+      <div id="panel" hidden>
+        <div class="btns panel-ust">
+          <button class="btn" type="button" id="yenile">Yenile</button>
+          <button class="btn" type="button" id="cikis">Çıkış</button>
+          <span id="sayi" class="ince"></span>
+        </div>
+        <div id="liste" class="istek-liste"></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

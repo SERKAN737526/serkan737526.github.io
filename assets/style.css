@@ -174,6 +174,25 @@ section .sub { color: var(--muted); margin: 0 0 32px; }
 .project-hero .lead { color: var(--muted); font-size: 1.1rem; max-width: 720px; margin: 0 0 24px; }
 .shot { border-radius: var(--radius); border: 1px solid var(--line); overflow: hidden; margin: 0 0 16px; }
 .shot figcaption { padding: 10px 14px; font-size: .88rem; color: var(--muted); background: var(--card); }
+.istek-form { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 16px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px; max-width: 720px; }
+.istek-form label { display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: .92rem; }
+.istek-form .tam { grid-column: 1 / -1; }
+.istek-form input, .istek-form textarea { font: inherit; font-weight: 400; color: var(--text); background: var(--bg-2); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+.istek-form input:focus, .istek-form textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.istek-form input[name=kod] { font-family: Consolas, "Courier New", monospace; letter-spacing: 2px; text-transform: uppercase; }
+.istek-form .tuzak { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.ince { color: var(--muted); font-weight: 400; font-size: .85rem; }
+.form-durum { margin: 10px 0 0; font-size: .92rem; min-height: 1.2em; }
+.form-durum.tamam { color: var(--accent-2); }
+.form-durum.hata { color: #ff8a80; }
+@media (max-width: 760px) { .istek-form { grid-template-columns: 1fr; } }
+.istek-form .secim { flex-direction: row; align-items: center; gap: 8px; font-weight: 400; color: var(--muted); }
+.panel-ust { align-items: center; margin-bottom: 16px; }
+.istek-liste { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.istek-kart { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+.istek-ust { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.istek-kod { font-family: Consolas, "Courier New", monospace; font-size: 1.5rem; letter-spacing: 3px; color: var(--accent); }
+.istek-kart p { margin: 0; }
 .downloads { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
 .dl { background: var(--card); border: 1px solid var(--line); border-top: 3px solid var(--accent); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
 .dl h3 { margin: 0; font-size: 1.1rem; }
