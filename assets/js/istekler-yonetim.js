@@ -74,6 +74,7 @@
     liste.appendChild(el("p", "ince", "Yükleniyor…"));
     return istek("/istekler").then(function (s) {
       if (s.durum === 401) { cikis(); girisDurum.textContent = "Şifre yanlış."; girisDurum.className = "form-durum hata"; return; }
+      if (s.durum === 503) { cikis(); girisDurum.textContent = "Sunucudaki şifre (ADMIN_TOKEN) ayarlı değil ya da 16 karakterden kısa. Cloudflare'de en az 16 karakterlik bir şifre koyun."; girisDurum.className = "form-durum hata"; return; }
       if (!s.j || !s.j.ok) { liste.textContent = ""; liste.appendChild(el("p", "form-durum hata", "Liste alınamadı.")); return; }
       giris.hidden = true;
       panel.hidden = false;
