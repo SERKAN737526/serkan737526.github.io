@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self' blob:; connect-src 'self' data: blob:; base-uri 'none'; form-action 'none'; object-src 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Foto3D Stüdyo · Serkan A.</title>
   <meta name="description" content="Fotoğraflardan gerçek 3D model üreten, düzenleyen ve oyun motorlarına aktaran Windows uygulaması.">
@@ -14,6 +14,8 @@
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/style.css">
   <script src="../assets/site.js" defer></script>
+  <script src="../assets/js/model-ayar.js"></script>
+  <script type="module" src="../assets/js/model-viewer.min.js"></script>
 </head>
 <body>
   <header class="nav">
@@ -41,6 +43,21 @@
         <button class="btn" type="button" data-share="" data-title="Foto3D Stüdyo">Paylaş</button>
       </div>
     </div>
+
+    <section class="demo3d" aria-labelledby="demo-baslik">
+      <h2 id="demo-baslik">Telefonla çek, 3D'ye dönüştür</h2>
+      <p class="sub">Soldaki termosu telefonla çektim; sağdaki model Foto3D ile o fotoğraflardan üretildi. Modeli parmağınızla ya da farenizle döndürüp yakınlaştırabilirsiniz.</p>
+      <div class="compare">
+        <figure class="shot">
+          <img src="../assets/img/foto3d-termos-foto.jpg" alt="Masa üzerinde duran yeşil termos, telefonla çekilmiş fotoğraf" width="680" height="1250">
+          <figcaption>Girdi: telefonla çekilen fotoğraf</figcaption>
+        </figure>
+        <figure class="shot viewer">
+          <model-viewer src="../assets/3d/termos.glb" alt="Termosun Foto3D ile üretilmiş, döndürülebilir 3D modeli" camera-controls touch-action="pan-y" auto-rotate shadow-intensity="1" exposure="1.05" interaction-prompt="none" data-hareket="termos-hareket"></model-viewer>
+          <figcaption>Çıktı: döndürülebilir 3D model <span id="termos-hareket" class="viewer-btns"></span></figcaption>
+        </figure>
+      </div>
+    </section>
 
     <figure class="shot">
       <img src="../assets/img/foto3d-1.jpg" alt="Kaput, kapılar, çamurluklar ve tekerlekler olarak ayrı renklerle etiketlenmiş otomobil modeli" width="1280" height="720">
