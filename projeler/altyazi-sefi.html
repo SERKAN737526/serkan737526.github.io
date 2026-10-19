@@ -39,6 +39,7 @@
       <p class="lead">Yabancı altyazıyı ve konuşmayı anında Türkçeye çeviren uygulama. Kurulum gerektirmez, tarayıcıda açılır; dizi izlerken, video dosyalarında ve YouTube'da çalışır.</p>
       <div class="btns">
         <a class="btn primary" href="https://serkan737526.github.io/altyazi-sefi/" target="_blank" rel="noopener">Uygulamayı aç</a>
+        <a class="btn" href="#indir">Eklentiyi indir</a>
         <button class="btn" type="button" data-share="" data-title="Altyazı Şefi">Paylaş</button>
       </div>
     </div>
@@ -58,6 +59,52 @@
         <figcaption>YouTube: bağlantıyı yapıştırın, video Türkçe altyazıyla açılsın.</figcaption>
       </figure>
     </div>
+
+    <section id="indir">
+      <h2>Tarayıcı eklentisini indir</h2>
+      <p class="sub">Sürüm 1.1.0 · Ücretsiz. Reklam yok, takip yok, gizli bir şey yok. Dosyalar doğrudan bu siteden iner; arada indirme sitesi ya da yönlendirme yoktur.</p>
+
+      <div class="downloads">
+        <article class="dl">
+          <h3>Chrome · Edge · Brave · Opera</h3>
+          <p class="dl-meta">Windows ve Mac · ZIP · 10,9 MB</p>
+          <div class="btns">
+            <a class="btn primary" href="../assets/indir/altyazi-sefi/AltyaziSefi-Eklenti-v1.1.0-Chrome-Edge-Brave-Opera.zip" download>Eklentiyi indir</a>
+            <a class="btn" href="../assets/indir/altyazi-sefi/Yardim-Chrome-Edge-Brave-Opera.pdf" target="_blank" rel="noopener">Resimli kurulum (PDF, 1,3 MB)</a>
+          </div>
+          <p class="dl-note">Zip'i klasöre çıkarın, tarayıcının uzantılar sayfasında "Geliştirici modu"nu açıp "Paketlenmemiş öğe yükle" ile klasörü seçin. Eklenti mağazadan değil doğrudan kurulduğu için tarayıcı "geliştirici modundaki uzantılar" uyarısı gösterebilir; bu normaldir.</p>
+          <p class="hash">SHA-256: ee18a00bd31e4c464b5c7b24131bc65120e4e90b7a7e9f001f8ebb1fc649585b</p>
+        </article>
+
+        <article class="dl">
+          <h3>Safari</h3>
+          <p class="dl-meta">Yalnızca Mac · ZIP · 10,9 MB · Xcode gerekir (ücretsiz)</p>
+          <div class="btns">
+            <a class="btn primary" href="../assets/indir/altyazi-sefi/AltyaziSefi-Eklenti-v1.1.0-Safari-Mac.zip" download>Eklentiyi indir</a>
+            <a class="btn" href="../assets/indir/altyazi-sefi/Yardim-Safari-Mac.pdf" target="_blank" rel="noopener">Resimli kurulum (PDF, 1,1 MB)</a>
+          </div>
+          <p class="dl-note">Zip'in içindeki "safari-kur.command" dosyası eklentiyi Apple'ın kendi aracıyla sizin Apple kimliğinizle imzalayıp kurar. İmzalı bir uygulama olmadığı için macOS ilk açılışta onay isteyebilir.</p>
+          <p class="hash">SHA-256: 0ac5da5209dd6a7e7192d547ac67cf5f44746ab481c42ebaa4d385a530340345</p>
+        </article>
+
+        <article class="dl dl-soon">
+          <h3>Firefox</h3>
+          <p class="dl-meta">Windows ve Mac · Yakında</p>
+          <p class="dl-note">Firefox yalnızca Mozilla'nın imzaladığı eklentileri kurar. İmzalı sürüm hazır olunca buraya eklenecek.</p>
+        </article>
+      </div>
+
+      <div class="note">
+        <strong>İndirmeden önce bilin:</strong>
+        <ul class="plain">
+          <li><strong>Etkinleştirme gerekir.</strong> Eklenti ilk açılışta bir cihaz kodu (karekod) gösterir; bu kodu bana gönderirsiniz, ben size etkinleştirme kodu iletirim.</li>
+          <li><strong>İzinler:</strong> Videolar her sitede olabildiği için eklenti tüm sitelerde çalışma izni ister; ancak siz bir sekmede "Bu sekmede çevir" demedikçe hiçbir şey yapmaz. Sayfanın içeriğini okumaz; altyazıyı videonun görüntüsünden okur. Chrome sürümü konuşmayı çevirmek için sekmenin sesini kullanır.</li>
+          <li><strong>Gizlilik:</strong> Görüntü ve ses bilgisayarınızdan çıkmaz; tanıma işlemi tarayıcının içinde yapılır. Dışarı yalnızca çevrilecek metin gider (cihaz içi çeviri yoksa Google Çeviri'ye, o da olmazsa MyMemory'ye). Etkinleştirme için yalnızca cihaz kodu onay sunucuma sorulur.</li>
+          <li><strong>Dosya doğrulama:</strong> İndirdiğiniz dosyanın SHA-256 değeri yukarıdakiyle aynıysa dosya değiştirilmemiştir. Windows'ta: <code>certutil -hashfile dosya.zip SHA256</code></li>
+          <li>İçindeki açık kaynak kütüphaneler (Tesseract.js, Transformers.js, ONNX Runtime) kendi lisans dosyalarıyla birlikte gelir.</li>
+        </ul>
+      </div>
+    </section>
 
     <section>
       <h2>Telefon uygulaması (Android)</h2>

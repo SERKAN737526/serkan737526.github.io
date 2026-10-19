@@ -174,6 +174,16 @@ section .sub { color: var(--muted); margin: 0 0 32px; }
 .project-hero .lead { color: var(--muted); font-size: 1.1rem; max-width: 720px; margin: 0 0 24px; }
 .shot { border-radius: var(--radius); border: 1px solid var(--line); overflow: hidden; margin: 0 0 16px; }
 .shot figcaption { padding: 10px 14px; font-size: .88rem; color: var(--muted); background: var(--card); }
+.downloads { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.dl { background: var(--card); border: 1px solid var(--line); border-top: 3px solid var(--accent); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+.dl h3 { margin: 0; font-size: 1.1rem; }
+.dl-meta { margin: 0; color: var(--accent-2); font-size: .9rem; font-weight: 600; }
+.dl-note { margin: 0; color: var(--muted); font-size: .9rem; }
+.dl-soon { border-top-color: var(--line); opacity: .8; }
+.hash { margin: 0; font-family: Consolas, "Courier New", monospace; font-size: .72rem; color: var(--muted); word-break: break-all; }
+.note ul.plain { margin: 8px 0 0; padding-left: 18px; }
+.note ul.plain li { margin-bottom: 6px; }
+.note code { font-size: .85em; background: var(--bg-2); padding: 1px 6px; border-radius: 6px; }
 .phones { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 18px; }
 .phones figure { margin: 0; }
 .phones img { border-radius: 26px; border: 6px solid #2a3040; box-shadow: 0 18px 40px rgba(0, 0, 0, .45); }
