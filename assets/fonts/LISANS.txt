@@ -1,0 +1,8 @@
+Bu klasördeki yazı tipleri SIL Open Font License 1.1 ile lisanslıdır
+(ticari kullanım dahil serbest; yazı tipi tek başına satılamaz).
+
+great-vibes-latin-400-normal.woff2  - Great Vibes, Copyright (c) 2012 TypeSETit, LLC (typesetit@att.net)
+italianno-latin-400-normal.woff2    - Italianno, Copyright (c) 2011 TypeSETit, LLC (typesetit@att.net)
+
+Kaynak: Fontsource (https://fontsource.org) / Google Fonts
+Lisans metni: https://openfontlicense.org
