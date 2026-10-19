@@ -46,7 +46,19 @@
 
     <section class="demo3d" aria-labelledby="demo-baslik">
       <h2 id="demo-baslik">Telefonla çek, 3D'ye dönüştür</h2>
-      <p class="sub">Soldaki termosu telefonla çektim; sağdaki model Foto3D ile o fotoğraflardan üretildi. Modeli parmağınızla ya da farenizle döndürüp yakınlaştırabilirsiniz.</p>
+      <p class="sub">Soldaki nesneleri telefonla çektim; sağdaki modeller Foto3D ile o fotoğraflardan üretildi. Modelleri parmağınızla ya da farenizle döndürüp yakınlaştırabilirsiniz.</p>
+      <h3 class="demo-h">Anatomik kalp maketi</h3>
+      <div class="compare">
+        <figure class="shot">
+          <img src="../assets/img/foto3d-kalp-foto.jpg" alt="Elde tutulan renkli anatomik kalp maketi, telefonla çekilmiş fotoğraf" width="720" height="1135">
+          <figcaption>Girdi: telefonla çekilen fotoğraf</figcaption>
+        </figure>
+        <figure class="shot viewer">
+          <model-viewer src="../assets/3d/kalp.glb" alt="Kalp maketinin Foto3D ile üretilmiş, döndürülebilir 3D modeli" camera-controls touch-action="pan-y" auto-rotate shadow-intensity="1" exposure="1.05" interaction-prompt="none"></model-viewer>
+          <figcaption>Çıktı: döndürülebilir 3D model</figcaption>
+        </figure>
+      </div>
+      <h3 class="demo-h">Termos</h3>
       <div class="compare">
         <figure class="shot">
           <img src="../assets/img/foto3d-termos-foto.jpg" alt="Masa üzerinde duran yeşil termos, telefonla çekilmiş fotoğraf" width="680" height="1250">
