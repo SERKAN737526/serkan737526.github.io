@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="tr"><head><meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}</style>
+</head><body>
+<title>Metro Construction Simulator</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Düzen: tam ekran oyun tuvali; üstünde şantiye levhası gibi tek bir başlatma kartı. */
+:root {
+  --night: #15130f;        /* şantiye gecesi */
+  --asphalt: #221f1a;      /* kart zemini */
+  --line: #3a352c;
+  --text: #f1ece2;
+  --muted: #a89f8e;
+  --safety: #fac02e;       /* oyunun vurgu sarısı (UIKit.ACCENT) */
+  --hazard-dark: #1b1813;
+  --ok: #7fd48a;
+  --display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color-scheme: dark;
+}
+html, body { height: 100%; }
+body {
+  background: var(--night);
+  color: var(--text);
+  font-family: var(--body);
+  overflow: hidden;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+#canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: var(--night);
+  outline: none;
+}
+#cover {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding-block: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-bottom, 0px));
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  background:
+    radial-gradient(120% 90% at 50% 110%, rgba(250, 192, 46, 0.10), transparent 60%),
+    var(--night);
+  overflow-y: auto;
+  z-index: 5;
+}
+.card {
+  width: min(560px, 100%);
+  background: var(--asphalt);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.stripe {
+  height: 14px;
+  background: repeating-linear-gradient(-45deg, var(--safety) 0 14px, var(--hazard-dark) 14px 28px);
+}
+.inner { display: grid; gap: 18px; padding: 22px 24px 24px; }
+.eyebrow {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--safety);
+}
+h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(30px, 6vw, 44px);
+  line-height: 1.02;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+.lead { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.5; max-width: 60ch; }
+#play {
+  appearance: none;
+  border: 0;
+  border-radius: 8px;
+  background: var(--safety);
+  color: #1b1813;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 14px 18px;
+  cursor: pointer;
+}
+#play:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
+#play:disabled { opacity: 0.6; cursor: progress; }
+.gate { display: grid; gap: 6px; }
+.gate label { font-family: var(--display); font-weight: 600; font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+#pin {
+  appearance: none;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--night);
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 22px;
+  letter-spacing: 0.4em;
+  padding: 12px 14px;
+}
+#pin:focus-visible { outline: 3px solid var(--safety); outline-offset: 2px; }
+#pin.wrong { border-color: #ff8f7a; }
+#pinmsg { font-size: 13px; color: #ff8f7a; min-height: 1.2em; }
+.progress { display: grid; gap: 8px; }
+.bar { height: 10px; border-radius: 5px; background: var(--line); overflow: hidden; }
+.bar > i { display: block; height: 100%; width: 0%; background: var(--safety); transition: width 0.2s linear; }
+#status { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; min-height: 1.4em; }
+#status.error { color: #ff8f7a; }
+.controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.controls section { min-width: 0; border-top: 1px solid var(--line); padding-top: 12px; }
+.controls h2 {
+  margin: 0 0 6px;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.controls ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; font-size: 14px; color: var(--muted); }
+kbd {
+  font-family: var(--body);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--night);
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 1px 6px;
+}
+.note { margin: 0; font-size: 13px; color: var(--muted); line-height: 1.45; }
+.note b { color: var(--ok); font-weight: 600; }
+#rotate {
+  position: fixed;
+  inset: 0;
+  z-index: 6;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  background: var(--night);
+  font-family: var(--display);
+  font-size: 26px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+#rotate p { margin: 8px 0 0; font-family: var(--body); font-size: 14px; color: var(--muted); text-transform: none; letter-spacing: 0; }
+@media (prefers-reduced-motion: reduce) { .bar > i { transition: none; } }
+</style>
+
+<canvas id="canvas" tabindex="0">Tarayıcınız bu oyunu çalıştıramıyor.</canvas>
+
+<div id="cover">
+  <div class="card">
+    <div class="stripe" aria-hidden="true"></div>
+    <div class="inner">
+      <div>
+        <div class="eyebrow">Web oynatıcı · sürüm <span id="ver">0.4.1</span> · Aşama 4</div>
+        <h1 lang="en">Metro Construction Simulator</h1>
+      </div>
+      <p class="lead">Telefondaki APK ile aynı oyun. Karasu şantiyesinde kamyonu Z01 kazı ağzında yükle, GPS okunu izleyerek yaklaşık 2 km ötedeki Z04 döküm sahasına götür, dök, her seferde 25.000 ₺ kazan. Kazı çukuru ve döküm sahası her seferde büyür.</p>
+      <div class="gate" id="gate">
+        <label for="pin">Giriş şifresi</label>
+        <input id="pin" type="password" inputmode="numeric" autocomplete="off" maxlength="12" placeholder="••••">
+        <div id="pinmsg" role="alert"></div>
+      </div>
+      <button id="play" type="button">Oyna</button>
+      <div class="progress" id="progress" hidden>
+        <div class="bar" aria-hidden="true"><i id="fill"></i></div>
+        <div id="status" role="status" aria-live="polite"></div>
+      </div>
+      <div class="controls">
+        <section>
+          <h2>Telefon</h2>
+          <ul>
+            <li>Sol alttaki joystick: gaz ve direksiyon</li>
+            <li>Sağ altta FREN, üstte Kamera</li>
+            <li>Sağ üstteki II: duraklat, kaydet, ayarlar</li>
+            <li>Mini haritaya dokun: yakınlaştır / uzaklaştır</li>
+          </ul>
+        </section>
+        <section>
+          <h2>Bilgisayar</h2>
+          <ul>
+            <li><kbd>↑</kbd> <kbd>↓</kbd> gaz ve geri, <kbd>←</kbd> <kbd>→</kbd> direksiyon</li>
+            <li><kbd>Boşluk</kbd> fren, <kbd>Esc</kbd> duraklat</li>
+            <li>Joystick fareyle de sürüklenebilir</li>
+          </ul>
+        </section>
+      </div>
+      <p class="note">İlk açılışta yaklaşık 10 MB indirilir. <b>Kayıtlar bu tarayıcıda saklanır</b>; telefondaki APK kayıtlarından ayrıdır. Web sürümü hızlı kontrol içindir: gerçek FPS ve ısınma için APK'yı kullanın.</p>
+    </div>
+  </div>
+</div>
+
+<div id="rotate" hidden>
+  <div>Telefonu yan çevirin<p>Oyun yatay ekranda oynanır.</p></div>
+</div>
+
+<script src="metro.js"></script>
+<script>
+(function () {
+  "use strict";
+  // Oyun dosyası (metro.wasm) yayın sınırına sığsın diye gzip ile sıkıştırılmış olarak yüklenir.
+  // Godot onu fetch() ile ister; burada araya girip tarayıcıda açıyoruz.
+  var WASM_SIZE = 39514754;
+  var PCK_SIZE = 523116;
+  var realFetch = window.fetch.bind(window);
+  window.fetch = function (input, init) {
+    var url = typeof input === "string" ? input : (input && input.url) || "";
+    if (/metro\.wasm(\?|$)/.test(url)) {
+      return realFetch("metro.wasm", init).then(function (res) {
+        if (!res.ok) throw new Error("Oyun dosyası indirilemedi (" + res.status + ").");
+        var plain = res.body.pipeThrough(new DecompressionStream("gzip"));
+        return new Response(plain, { headers: { "Content-Type": "application/wasm", "Content-Length": String(WASM_SIZE) } });
+      });
+    }
+    // Yayın yalnız bilinen dosya türlerini sunuyor: oyun paketi .pck yerine metro-pck.wasm adıyla durur.
+    if (/metro\.pck(\?|$)/.test(url)) {
+      return realFetch("metro-pck.wasm", init);
+    }
+    return realFetch(input, init);
+  };
+
+  var cover = document.getElementById("cover");
+  var play = document.getElementById("play");
+  var progress = document.getElementById("progress");
+  var fill = document.getElementById("fill");
+  var status = document.getElementById("status");
+  var rotate = document.getElementById("rotate");
+  var started = false;
+
+  function setStatus(text, isError) {
+    status.textContent = text;
+    status.classList.toggle("error", !!isError);
+  }
+
+  function isTouch() { return window.matchMedia("(pointer: coarse)").matches; }
+  function checkOrientation() {
+    rotate.hidden = !(started && isTouch() && window.innerHeight > window.innerWidth);
+  }
+  window.addEventListener("resize", checkOrientation);
+
+  if (typeof DecompressionStream === "undefined" || typeof Engine === "undefined") {
+    play.disabled = true;
+    progress.hidden = false;
+    setStatus("Bu tarayıcı oyunu açamıyor. Chrome, Edge, Firefox ya da Safari'nin güncel sürümünü kullanın.", true);
+    return;
+  }
+  if (!Engine.isWebGLAvailable(2)) {
+    play.disabled = true;
+    progress.hidden = false;
+    setStatus("Tarayıcıda WebGL 2 kapalı ya da desteklenmiyor. Donanım hızlandırmayı açıp sayfayı yenileyin.", true);
+    return;
+  }
+
+  var engine = new Engine({
+    args: [],
+    canvasResizePolicy: 2,
+    executable: "metro",
+    mainPack: "metro.pck",
+    fileSizes: { "metro.pck": PCK_SIZE, "metro.wasm": WASM_SIZE },
+    focusCanvas: true,
+    ensureCrossOriginIsolationHeaders: false,
+    experimentalVK: false,
+    gdextensionLibs: [],
+    emscriptenPoolSize: 8,
+    godotPoolSize: 4
+  });
+
+  // Giriş şifresi. Sayfada şifrenin kendisi değil SHA-256 özeti durur. Not: tarayıcıda yapılan
+  // bir kontroldür, oyunu meraklılardan saklar; gerçek bir güvenlik kilidi değildir.
+  var PIN_HASH = "c4e2e9a17e38d281b86a468fabd6b9eed6b88a0f229eef8aeb3aaa5b640b0cba";
+  var gate = document.getElementById("gate");
+  var pin = document.getElementById("pin");
+  var pinmsg = document.getElementById("pinmsg");
+  var unlocked = false;
+  try { unlocked = localStorage.getItem("metro_pin") === PIN_HASH; } catch (e) { unlocked = false; }
+  if (unlocked) gate.hidden = true;
+
+  function sha256(text) {
+    return crypto.subtle.digest("SHA-256", new TextEncoder().encode(text)).then(function (buf) {
+      return Array.prototype.map.call(new Uint8Array(buf), function (b) { return ("0" + b.toString(16)).slice(-2); }).join("");
+    });
+  }
+
+  pin.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") play.click();
+  });
+  pin.addEventListener("input", function () {
+    pin.classList.remove("wrong");
+    pinmsg.textContent = "";
+  });
+
+  play.addEventListener("click", function () {
+    if (started) return;
+    if (!unlocked) {
+      if (!window.crypto || !crypto.subtle) {
+        pinmsg.textContent = "Bu sayfa güvenli bağlantı (https) üzerinden açılmalı.";
+        return;
+      }
+      sha256(pin.value.trim()).then(function (h) {
+        if (h === PIN_HASH) {
+          unlocked = true;
+          try { localStorage.setItem("metro_pin", PIN_HASH); } catch (e) { /* hatırlanamazsa her seferinde sorulur */ }
+          gate.hidden = true;
+          play.click();
+        } else {
+          pin.classList.add("wrong");
+          pinmsg.textContent = "Şifre yanlış.";
+          pin.select();
+        }
+      });
+      return;
+    }
+    started = true;
+    play.disabled = true;
+    play.textContent = "Yükleniyor…";
+    progress.hidden = false;
+    setStatus("Oyun indiriliyor…");
+    // Telefonda tam ekran daha rahat; izin verilmezse sorun değil.
+    try {
+      var el = document.documentElement;
+      if (isTouch() && el.requestFullscreen) {
+        el.requestFullscreen({ navigationUI: "hide" }).then(function () {
+          if (screen.orientation && screen.orientation.lock) return screen.orientation.lock("landscape");
+        }).catch(function () {});
+      }
+    } catch (e) { /* tam ekran isteğe bağlı */ }
+    engine.startGame({
+      onProgress: function (current, total) {
+        if (total > 0) {
+          var pct = Math.min(100, Math.round(current / total * 100));
+          fill.style.width = pct + "%";
+          setStatus("Oyun indiriliyor… %" + pct + " (" + (current / 1048576).toFixed(1) + " / " + (total / 1048576).toFixed(1) + " MB, açılmış hâli)");
+        } else {
+          setStatus("Oyun indiriliyor…");
+        }
+      }
+    }).then(function () {
+      cover.hidden = true;
+      checkOrientation();
+      document.getElementById("canvas").focus();
+    }).catch(function (err) {
+      started = false;
+      play.disabled = false;
+      play.textContent = "Tekrar dene";
+      setStatus("Oyun açılamadı: " + (err && err.message ? err.message : err), true);
+    });
+  });
+})();
+</script>
+</body></html>
