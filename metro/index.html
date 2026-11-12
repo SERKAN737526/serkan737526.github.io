@@ -4,6 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}</style>
 </head><body>
+<meta charset="utf-8">
 <title>Ameleden Mühendisliğe</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -167,6 +168,7 @@ kbd {
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
+[hidden] { display: none !important; }
 #rotate p { margin: 8px 0 0; font-family: var(--body); font-size: 14px; color: var(--muted); text-transform: none; letter-spacing: 0; }
 @media (prefers-reduced-motion: reduce) { .bar > i { transition: none; } }
 </style>
@@ -178,7 +180,7 @@ kbd {
     <div class="stripe" aria-hidden="true"></div>
     <div class="inner">
       <div>
-        <div class="eyebrow">Web oynatıcı · sürüm <span id="ver">0.9.4</span> · Aşama 9</div>
+        <div class="eyebrow">Web oynatıcı · sürüm <span id="ver">0.10.0</span> · Aşama 10</div>
         <h1>Ameleden Mühendisliğe</h1>
       </div>
       <p class="lead">Telefondaki APK ile aynı oyun. Karasu şantiyesinde kamyonu Z01 kazı ağzında yükle, GPS okunu izleyerek yaklaşık 2 km ötedeki Z04 döküm sahasına götür, dök, her seferde 25.000 ₺ kazan. Kamyonu kantarda tartıp Z04'e dök; araçtan inip yürü, TAIGA T-80 ekskavatöre bin, kamyonu kendin doldur. <b>Klavye:</b> W A S D sür / yürü / sol kol · ok tuşları sağ kol · F in/bin · R/V vites (Pro) · E araç değiştir · Q sürüş/kazı · C kamera · fareyle sürükle: kamerayı çevir · teker: yaklaş · Boşluk fren · Esc menü. Oyun kolu da çalışır.</p>
@@ -227,7 +229,7 @@ kbd {
   // Oyun dosyası (metro.wasm) yayın sınırına sığsın diye gzip ile sıkıştırılmış olarak yüklenir.
   // Godot onu fetch() ile ister; burada araya girip tarayıcıda açıyoruz.
   var WASM_SIZE = 39514754;
-  var PCK_SIZE = 654932;
+  var PCK_SIZE = 701244;
   var realFetch = window.fetch.bind(window);
   window.fetch = function (input, init) {
     var url = typeof input === "string" ? input : (input && input.url) || "";
