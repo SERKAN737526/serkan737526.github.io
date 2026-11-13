@@ -229,7 +229,7 @@ kbd {
   // Oyun dosyası (metro.wasm) yayın sınırına sığsın diye gzip ile sıkıştırılmış olarak yüklenir.
   // Godot onu fetch() ile ister; burada araya girip tarayıcıda açıyoruz.
   var WASM_SIZE = 39514754;
-  var PCK_SIZE = 14953712;
+  var PCK_SIZE = 14954144;
   var realFetch = window.fetch.bind(window);
   window.fetch = function (input, init) {
     var url = typeof input === "string" ? input : (input && input.url) || "";
